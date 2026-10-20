@@ -1,0 +1,15 @@
+# Maven output
+target/
+
+# Eclipse output and project metadata
+**/bin/
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA metadata
+.idea/
+*.iml
+
+# macOS metadata
+.DS_Store

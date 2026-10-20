@@ -1,0 +1,7 @@
+name: TCPackRuntimeDriver
+version: '2.0'
+api-version: '1.13'
+main: me.tzahi.tcpack.harness.RuntimeDriver
+depend: [TCPack]
+authors: [Tzahi, TacoID, Trenly]
+description: Isolated proxy probes by Trenly for TCPack by tzahi12345 and TacoID; not client E2E.

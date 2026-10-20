@@ -1,0 +1,46 @@
+TCPack
+
+Original work by tzahi12345 (Tzahi) and TacoID.
+TCPack 2.0 compatibility refactor by Trenly, based on TCPack by
+tzahi12345 and TacoID. No original-author endorsement is implied.
+
+TCPack and this adaptation are licensed under Creative Commons
+Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0).
+License: https://creativecommons.org/licenses/by-sa/3.0/
+Full legal text: LICENSE (also META-INF/LICENSE in the plugin JAR).
+The license's warranty disclaimer and limitation of liability apply.
+
+Original project: https://dev.bukkit.org/projects/tcpack
+Published license:
+https://www.curseforge.com/minecraft/bukkit-plugins/tcpack/license
+Original source: https://github.com/Tzahi12345/TCPack
+Original work identified by the published license:
+https://dl.dropbox.com/u/2159828/Source.zip
+Maintained adaptation: https://github.com/Trenly/TCPack
+
+Published license statement supplied by the maintainer:
+"TCPack by tzahi12345, TacoID is licensed under a Creative Commons
+Attribution-ShareAlike 3.0 Unported License.
+(http://creativecommons.org/licenses/by-sa/3.0/)
+Based on a work at dl.dropbox.com
+(https://dl.dropbox.com/u/2159828/Source.zip)."
+The CurseForge license page returned HTTP 403 during this refactor;
+the statement above was supplied by the maintainer, not independently
+retrieved from that page.
+
+Changes in the 2.0 adaptation:
+- Retain only personal-time (/ptime) and flight (/fly) commands.
+- Remove fake, compression, and aggregate-help commands.
+- Build a clean replacement without MCStats or other telemetry.
+- Change dawn to sunrise (23000) and add dusk for sunset (12000).
+- Correct command validation, sender/target handling, and flight ordering.
+- Replace the obsolete IDE-only build with Maven and compatibility tests.
+See README.md and docs/not-modernized-commands.md for details.
+
+Redistribution must preserve the applicable attribution, license and
+warranty notices and comply with ShareAlike. No additional restrictions
+or technological measures limiting the licensed rights are imposed.
+
+Third-party build/test tools and provided server APIs retain their own
+licenses; they are not relicensed by this notice. Server APIs and
+build/test dependencies are not bundled in the plugin JAR.

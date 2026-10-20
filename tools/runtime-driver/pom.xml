@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.tzahi</groupId>
+  <artifactId>tcpack-runtime-driver</artifactId>
+  <version>2.0</version>
+  <name>TCPack isolated-server proxy probes (not a client test)</name>
+  <description>Test harness by Trenly for TCPack by tzahi12345 and TacoID.</description>
+  <licenses>
+    <license>
+      <name>Creative Commons Attribution-ShareAlike 3.0 Unported</name>
+      <url>https://creativecommons.org/licenses/by-sa/3.0/</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.outputTimestamp>2026-01-01T00:00:00Z</project.build.outputTimestamp>
+  </properties>
+  <repositories>
+    <repository>
+      <id>spigotmc-snapshots</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.8.8-R0.1-20160221.082514-43</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>net.md-5</groupId>
+          <artifactId>bungeecord-chat</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+  <build>
+    <resources>
+      <resource><directory>src/main/resources</directory></resource>
+      <resource>
+        <directory>${project.basedir}/../..</directory>
+        <targetPath>META-INF</targetPath>
+        <includes><include>LICENSE</include><include>NOTICE</include></includes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.14.1</version>
+        <configuration><release>8</release></configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>

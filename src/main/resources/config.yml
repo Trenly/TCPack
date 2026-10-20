@@ -1,0 +1,6 @@
+# TCPack 2.0 by tzahi12345 (Tzahi), TacoID; compatibility refactor by Trenly.
+# CC BY-SA 3.0 Unported; see LICENSE and NOTICE.
+# Missing flags default to true. Invalid flag values disable the plugin.
+# Existing files are preserved; configuration changes require a restart.
+EnablePtime: true
+EnableFlight: true

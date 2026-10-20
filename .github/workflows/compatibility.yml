@@ -1,0 +1,35 @@
+name: API compatibility (compile only)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile-api:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        api:
+          - 1.8.8-R0.1-20160221.082514-43
+          - 1.13.2-R0.1-SNAPSHOT
+          - 1.20.6-R0.1-SNAPSHOT
+          - 1.21.11-R0.1-SNAPSHOT
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - name: Compile production API surface without replacing release JAR
+        shell: pwsh
+        run: .\tools\Check-Api.ps1 -ApiVersion '${{ matrix.api }}'
+      - name: Build Java 8 test-only runtime driver
+        if: matrix.api == '1.8.8-R0.1-20160221.082514-43'
+        shell: pwsh
+        run: .\mvnw.cmd --batch-mode --no-transfer-progress -f tools\runtime-driver\pom.xml package
+      # No server startup, runtime-support claim, or EULA acceptance in CI.

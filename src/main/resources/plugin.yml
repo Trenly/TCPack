@@ -1,0 +1,60 @@
+name: TCPack
+version: '${project.version}'
+main: me.tzahi.TCPack.TCPack
+api-version: '1.13'
+authors: [Tzahi, TacoID, Trenly]
+website: https://github.com/Trenly/TCPack
+description: Personal time and flight; original by tzahi12345 and TacoID, refactor by Trenly.
+commands:
+  ptime:
+    description: Set or inspect your personal time.
+    usage: /<command> [day|night|morning|dawn|dusk|reset|info]
+  fly:
+    description: Control flight in survival or adventure mode.
+    usage: /<command> [t|toggle|on|off] [player]
+permissions:
+  ptime.list:
+    description: View personal time help.
+    default: op
+  ptime.day:
+    description: Set personal time to day.
+    default: op
+  ptime.night:
+    description: Set personal time to night.
+    default: op
+  ptime.morning:
+    description: Set personal time to morning.
+    default: op
+  ptime.dawn:
+    description: Set personal time to sunrise.
+    default: op
+  ptime.dusk:
+    description: Set personal time to sunset.
+    default: op
+  ptime.reset:
+    description: Reset personal time to server time.
+    default: op
+  ptime.info:
+    description: Inspect personal time and offset.
+    default: op
+  fly.list:
+    description: View flight help.
+    default: op
+  fly.toggle:
+    description: Toggle your own flight.
+    default: op
+  fly.enable:
+    description: Enable your own flight.
+    default: op
+  fly.disable:
+    description: Disable your own flight.
+    default: op
+  fly.toggle.other:
+    description: Toggle another online player's flight.
+    default: op
+  fly.enable.other:
+    description: Enable another online player's flight.
+    default: op
+  fly.disable.other:
+    description: Disable another online player's flight.
+    default: op
