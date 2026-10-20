@@ -63,7 +63,7 @@ public final class RuntimeDriver extends JavaPlugin {
     private void probe() {
         Plugin plugin = getServer().getPluginManager().getPlugin("TCPack");
         check(plugin != null && plugin.isEnabled(), "TCPack enabled");
-        check("2.0".equals(plugin.getDescription().getVersion()), "release version 2.0");
+        check("2.0.1".equals(plugin.getDescription().getVersion()), "release version 2.0.1");
         getLogger().info("TCPACK_RUNTIME_EVIDENCE server=" + getServer().getVersion()
                 + " bukkit=" + getServer().getBukkitVersion()
                 + " java=" + System.getProperty("java.runtime.version"));
@@ -82,7 +82,9 @@ public final class RuntimeDriver extends JavaPlugin {
         execute(ptime, player, "reset");
         check(player.resets == 1 && player.relative, "ptime reset API");
         execute(ptime, player);
-        check(player.message().contains("ptime.list"), "ptime help");
+        check(player.message().contains("}---- PlayerTime help ----{")
+                && player.message().contains("/tcpack:ptime dawn")
+                && player.message().contains("/tcpack:ptime dusk"), "ptime help");
         for (String action : new String[] {"day", "night", "morning", "dawn", "dusk", "info", "reset", ""}) {
             player.denied.add("ptime." + (action.isEmpty() ? "list" : action));
             int before = player.mutations;

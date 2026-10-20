@@ -30,7 +30,7 @@ Use the wrapper from the repository root:
 ```
 
 The production server API has provided scope; it must not appear inside
-`target/TCPack-2.0.jar`. The JAR must contain only the maintained code,
+`target/TCPack-2.0.1.jar`. The JAR must contain only the maintained code,
 plugin/configuration resources, and attribution/license metadata, never
 the old Eclipse `TCPack/bin` classes.
 
@@ -68,7 +68,8 @@ be checked directly in the source, dependency graph, and built JAR.
 
 ## Recorded results
 
-The production artifact is `target/TCPack-2.0.jar`, SHA-256:
+The initial 2.0 refactor artifact tested in the eight-server matrix below
+had SHA-256:
 
 ```text
 193c75e6c9707b655fe9bc8776d6096b78cb34a4e93f3c0a711948cefe7998e1
@@ -123,6 +124,13 @@ claimed as connected-player runtime evidence. The test driver uses a
 descriptor-preserving player stub to handle the legacy 1.8.8 API's
 incompatible `getHealth()` return descriptors; this is test-only code.
 
+The original-style `/ptime` help restoration before the 2.0.1 version bump was verified
+with 31 unit tests on Java 8 and 25 and 167 in-server assertions on
+Paper 1.8.8 build 443 and 26.3 build 135. Its rebuilt production JAR has
+SHA-256 `9f9f67e0b5618548c23bbdf88df466e64510b7d671e0731c6eab1b1e572531fa`.
+The intermediate rows above describe the initial artifact, not a rerun
+of this help-only change.
+
 Paper 1.8 itself was not available from the official archive; 1.8.8 is
 the acquired legacy endpoint. No result for exact 1.8 is claimed. Full
 connected-player testing and every historical patch release remain
@@ -135,7 +143,7 @@ then create a **new** isolated work-directory path for each run:
 
 ```powershell
 .\tools\Test-Compatibility.ps1 `
-    -PluginJar .\target\TCPack-2.0.jar `
+    -PluginJar .\target\TCPack-2.0.1.jar `
     -ServerJar 'C:\test-tools\paper-26.3-135.jar' `
     -JavaPath 'C:\test-tools\jdk25\bin\java.exe' `
     -WorkingDirectory 'C:\test-runs\tcpack-26.3-new' `

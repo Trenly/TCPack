@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.Test;
@@ -68,14 +69,7 @@ class PtimeCommandTest {
 
         assertTrue(execute(new PtimeCommand(true), allowed.player()));
 
-        String help = allowed.messagesText();
-        for (String entry : Arrays.asList(
-                "/ptime day", "ptime.day", "/ptime night", "ptime.night",
-                "/ptime morning", "ptime.morning", "/ptime dawn", "23000",
-                "ptime.dawn", "/ptime dusk", "12000", "ptime.dusk",
-                "/ptime reset", "ptime.reset", "/ptime info", "ptime.info")) {
-            assertTrue(help.contains(entry), entry);
-        }
+        assertEquals(expectedHelp("ptime"), allowed.messages);
         assertEquals(0, allowed.setCalls);
         assertEquals(0, allowed.resetCalls);
 
@@ -84,6 +78,30 @@ class PtimeCommandTest {
         assertTrue(denied.messagesText().contains("ptime.list"));
         assertEquals(0, denied.setCalls);
         assertEquals(0, denied.resetCalls);
+    }
+
+    @Test
+    void helpPreservesTheNamespacedCommandLabel() {
+        PlayerState state = new PlayerState(Collections.singleton("ptime.list"));
+
+        assertTrue(new PtimeCommand(true).onCommand(state.player(), null,
+                "tcpack:ptime", new String[0]));
+
+        assertEquals(expectedHelp("tcpack:ptime"), state.messages);
+    }
+
+    private static List<String> expectedHelp(String label) {
+        return Arrays.asList(
+                ChatColor.BLUE + "}---- PlayerTime help ----{",
+                ChatColor.GOLD + "/" + label + " day" + ChatColor.BLUE + " - Sets your time to day.",
+                ChatColor.GOLD + "/" + label + " night" + ChatColor.BLUE + " - Sets your time to night.",
+                ChatColor.GOLD + "/" + label + " morning" + ChatColor.BLUE + " - Sets your time to morning.",
+                ChatColor.GOLD + "/" + label + " dawn" + ChatColor.BLUE + " - Sets your time to sunrise.",
+                ChatColor.GOLD + "/" + label + " dusk" + ChatColor.BLUE + " - Sets your time to sunset.",
+                ChatColor.GOLD + "/" + label + " reset" + ChatColor.BLUE
+                        + " - Sets your time to the normal server-time.",
+                ChatColor.GOLD + "/" + label + " info" + ChatColor.BLUE
+                        + " - Shows you information about the time.");
     }
 
     @Test

@@ -3,7 +3,7 @@
 .SYNOPSIS
 Compiles production sources against an alternate provided Spigot API in isolation.
 .DESCRIPTION
-Does not package or overwrite target\TCPack-2.0.jar. This is a source compilation
+Does not package or overwrite target\TCPack-2.0.1.jar. This is a source compilation
 check, not runtime linkage or server support evidence. Requires an installed JDK
 on JAVA_HOME; uses the repository's pinned Maven 3.9.11 wrapper.
 #>

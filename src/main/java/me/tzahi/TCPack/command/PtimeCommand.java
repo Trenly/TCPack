@@ -104,21 +104,20 @@ public final class PtimeCommand implements CommandExecutor {
     }
 
     private void sendHelp(Player player, String label) {
-        player.sendMessage(ChatColor.GOLD + "Personal time commands:");
-        player.sendMessage(ChatColor.YELLOW + "/" + label + " day" + ChatColor.WHITE
-                + " — Set personal time to day (6000 ticks; ptime.day).");
-        player.sendMessage(ChatColor.YELLOW + "/" + label + " night" + ChatColor.WHITE
-                + " — Set personal time to night (18000 ticks; ptime.night).");
-        player.sendMessage(ChatColor.YELLOW + "/" + label + " morning" + ChatColor.WHITE
-                + " — Set personal time to morning (0 ticks; ptime.morning).");
-        player.sendMessage(ChatColor.YELLOW + "/" + label + " dawn" + ChatColor.WHITE
-                + " — Set personal time to sunrise (23000 ticks; ptime.dawn).");
-        player.sendMessage(ChatColor.YELLOW + "/" + label + " dusk" + ChatColor.WHITE
-                + " — Set personal time to sunset (12000 ticks; ptime.dusk).");
-        player.sendMessage(ChatColor.YELLOW + "/" + label + " reset" + ChatColor.WHITE
-                + " — Reset personal time to the world's time (ptime.reset).");
-        player.sendMessage(ChatColor.YELLOW + "/" + label + " info" + ChatColor.WHITE
-                + " — Show personal time and offset in ticks (ptime.info).");
-        player.sendMessage(ChatColor.GRAY + "Help permission: ptime.list.");
+        player.sendMessage(ChatColor.BLUE + "}---- PlayerTime help ----{");
+        player.sendMessage(ChatColor.GOLD + "/" + label + " day" + ChatColor.BLUE
+                + " - Sets your time to day.");
+        player.sendMessage(ChatColor.GOLD + "/" + label + " night" + ChatColor.BLUE
+                + " - Sets your time to night.");
+        player.sendMessage(ChatColor.GOLD + "/" + label + " morning" + ChatColor.BLUE
+                + " - Sets your time to morning.");
+        player.sendMessage(ChatColor.GOLD + "/" + label + " dawn" + ChatColor.BLUE
+                + " - Sets your time to sunrise.");
+        player.sendMessage(ChatColor.GOLD + "/" + label + " dusk" + ChatColor.BLUE
+                + " - Sets your time to sunset.");
+        player.sendMessage(ChatColor.GOLD + "/" + label + " reset" + ChatColor.BLUE
+                + " - Sets your time to the normal server-time.");
+        player.sendMessage(ChatColor.GOLD + "/" + label + " info" + ChatColor.BLUE
+                + " - Shows you information about the time.");
     }
 }

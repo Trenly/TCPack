@@ -23,7 +23,7 @@ class PluginMetadataTest {
             descriptor = new PluginDescriptionFile(stream);
         }
         assertEquals("TCPack", descriptor.getName());
-        assertEquals("2.0", descriptor.getVersion());
+        assertEquals("2.0.1", descriptor.getVersion());
         assertEquals("me.tzahi.TCPack.TCPack", descriptor.getMain());
         assertEquals(new HashSet<>(Arrays.asList("ptime", "fly")),
                 descriptor.getCommands().keySet());

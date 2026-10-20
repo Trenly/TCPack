@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string] $JarPath = (Join-Path (Split-Path $PSScriptRoot -Parent) 'target\TCPack-2.0.jar')
+    [string] $JarPath = (Join-Path (Split-Path $PSScriptRoot -Parent) 'target\TCPack-2.0.1.jar')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -64,8 +64,8 @@ try {
         throw 'Missing plugin.yml'
     }
     $descriptor = [Text.Encoding]::UTF8.GetString((Read-Entry $descriptorEntry))
-    if ($descriptor -notmatch "(?m)^version: ['""]?2\.0['""]?\s*$") {
-        throw 'Plugin version is not 2.0'
+    if ($descriptor -notmatch "(?m)^version: ['""]?2\.0\.1['""]?\s*$") {
+        throw 'Plugin version is not 2.0.1'
     }
     if ($descriptor -match '\$\{') {
         throw 'Unresolved Maven resource placeholder in plugin.yml'
@@ -81,7 +81,7 @@ $hash = (Get-FileHash -LiteralPath $resolvedJar -Algorithm SHA256).Hash
 [pscustomobject]@{
     Jar = $resolvedJar
     SHA256 = $hash
-    Version = '2.0'
+    Version = '2.0.1'
     ClassFileMajor = 52
     LicenseAndNotice = 'Identical to repository originals'
     Telemetry = 'None'

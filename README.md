@@ -1,4 +1,4 @@
-# TCPack 2.0
+# TCPack 2.0.1
 
 **Original TCPack by tzahi12345 (Tzahi) and TacoID.**
 **TCPack 2.0 compatibility refactor by Trenly.**
@@ -11,7 +11,7 @@ the original authors is implied.
 
 ## Compatibility and installation
 
-One `TCPack-2.0.jar` targets Minecraft **1.8 through 26.3**, with Paper as the
+One `TCPack-2.0.1.jar` targets Minecraft **1.8 through 26.3**, with Paper as the
 primary implementation and Bukkit/Spigot compatibility where available.
 Folia is not supported. The plugin uses Java 8 bytecode; **run each server on
 the Java version required by that server**, not necessarily Java 8.
@@ -23,7 +23,7 @@ Paper 26.3 requires Java 25.
 > performed, exact builds, and any unresolved runtime coverage.
 
 1. Stop the server normally and back up its plugin configuration.
-2. Replace the old TCPack JAR in `plugins` with `TCPack-2.0.jar`. Do not keep
+2. Replace the old TCPack JAR in `plugins` with `TCPack-2.0.1.jar`. Do not keep
    both versions installed.
 3. Start the server normally. Do not use plugin hot-reload tools.
 
@@ -43,6 +43,8 @@ error and disable TCPack rather than silently enabling a feature.
 
 All `/ptime` commands require a player sender. They change only that
 player's time, never world time or another player's time.
+Help retains the original blue PlayerTime header, gold command names,
+and short blue descriptions, including entries for dawn and dusk.
 
 | Command | Effect | Permission |
 | --- | --- | --- |
@@ -111,7 +113,7 @@ On Linux/macOS:
 bash ./mvnw verify
 ```
 
-The output is `target/TCPack-2.0.jar`. The server API is provided by the
+The output is `target/TCPack-2.0.1.jar`. The server API is provided by the
 server, not bundled. Build/test tools require network access on first use.
 Maven is the source of truth for IDE imports; the obsolete Eclipse project,
 legacy `TCPack` source/output tree, and checked-in compiled classes have
