@@ -3,8 +3,10 @@ package me.tzahi.TCPack;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
+import me.tzahi.TCPack.command.CompressCommand;
 import me.tzahi.TCPack.command.FlyCommand;
 import me.tzahi.TCPack.command.PtimeCommand;
+import me.tzahi.TCPack.command.TCPackCommand;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -29,6 +31,8 @@ public final class TCPack extends JavaPlugin {
 
         register("ptime", new PtimeCommand(settings.isPtimeEnabled()));
         register("fly", new FlyCommand(settings.isFlightEnabled(), getServer()));
+        register("compress", new CompressCommand(settings.isCompressEnabled()));
+        register("tcpack", new TCPackCommand());
     }
 
     private void register(String name, CommandExecutor executor) {

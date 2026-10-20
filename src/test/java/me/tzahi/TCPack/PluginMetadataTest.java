@@ -23,16 +23,17 @@ class PluginMetadataTest {
             descriptor = new PluginDescriptionFile(stream);
         }
         assertEquals("TCPack", descriptor.getName());
-        assertEquals("2.0.1", descriptor.getVersion());
+        assertEquals("2.1.0", descriptor.getVersion());
         assertEquals("me.tzahi.TCPack.TCPack", descriptor.getMain());
-        assertEquals(new HashSet<>(Arrays.asList("ptime", "fly")),
+        assertEquals(new HashSet<>(Arrays.asList("ptime", "fly", "compress", "tcpack")),
                 descriptor.getCommands().keySet());
         assertTrue(descriptor.getAuthors().containsAll(Arrays.asList("Tzahi", "TacoID", "Trenly")));
         HashSet<String> expectedPermissions = new HashSet<>(Arrays.asList(
                 "ptime.list", "ptime.day", "ptime.night", "ptime.morning", "ptime.dawn",
                 "ptime.dusk", "ptime.reset", "ptime.info", "fly.list", "fly.toggle",
                 "fly.enable", "fly.disable", "fly.toggle.other", "fly.enable.other",
-                "fly.disable.other"));
+                "fly.disable.other", "compress.list", "compress.wood",
+                "compress.bonemeal", "compress.ores", "tcpack.list"));
         YamlConfiguration configuration = new YamlConfiguration();
         configuration.options().pathSeparator('/');
         try (InputStream stream = getClass().getResourceAsStream("/plugin.yml")) {

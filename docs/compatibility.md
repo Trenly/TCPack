@@ -1,6 +1,6 @@
 # Compatibility and verification
 
-TCPack 2.0 targets Minecraft 1.8 through 26.3 on Paper, with Bukkit/Spigot
+TCPack 2.x targets Minecraft 1.8 through 26.3 on Paper, with Bukkit/Spigot
 compatibility where available. Folia is excluded. One Java-8-compatible
 plugin JAR is used for all targets; server implementations and JVMs are
 not bundled.
@@ -30,7 +30,7 @@ Use the wrapper from the repository root:
 ```
 
 The production server API has provided scope; it must not appear inside
-`target/TCPack-2.0.1.jar`. The JAR must contain only the maintained code,
+`target/TCPack-2.1.0.jar`. The JAR must contain only the maintained code,
 plugin/configuration resources, and attribution/license metadata, never
 the old Eclipse `TCPack/bin` classes.
 
@@ -136,6 +136,49 @@ the acquired legacy endpoint. No result for exact 1.8 is claimed. Full
 connected-player testing and every historical patch release remain
 unverified.
 
+## Compression release 2.1.0
+
+The 2.1.0 release restores compression and `/tcpack` aggregate help while retaining one legacy-API
+Java-8-compatible JAR. Its production artifact is
+`target/TCPack-2.1.0.jar`, SHA-256:
+
+```text
+cce9e76148bde36e129249f0e7e6b4ff3f66edc588af040f2cdde1dc9c3b6a9e
+```
+
+All 55 unit tests passed on Java 8 and 25. The same release JAR passed
+the following isolated runtime matrix, including all retained command
+checks and compression using the server's real ItemStacks and inventory
+storage behind the test player/inventory interface stubs:
+
+| Paper version | Build | JVM | Assertions | Bonemeal output |
+| --- | --- | --- | --- | --- |
+| 1.8.8 | 443 | Temurin 8u504 | 350 | Bones |
+| 1.12.2 | 1205 | Temurin 8u504 | 400 | Bone blocks |
+| 1.13.2 | 387 | Temurin 8u504 | 400 | Bone blocks |
+| 1.16.5 | 427 | Temurin 8u504 | 421 | Bone blocks |
+| 1.17.1 | 81 | Temurin 16.0.2+7 | 449 | Bone blocks |
+| 1.20.6 | 115 | Temurin 21.0.12.1 | 466 | Bone blocks |
+| 1.21.11 | 67 | Temurin 21.0.12.1 | 473 | Bone blocks |
+| 26.3 | 135 | Temurin 25.0.4.1 | 480 | Bone blocks |
+
+Each server stopped gracefully with exit code zero. Probes exercised all
+available plank-to-base-log/stem mappings, rejected bamboo where present,
+checked legacy species/dye data and modern raw-ore/ingot blocks, preserved
+remainders and named/lore items, ignored armor/offhand, and verified
+all-or-nothing rejection of a full inventory. These are not connected
+player/client or visual tests; the exact 1.8 limitation still applies.
+Nugget probes cover iron/gold where available, chaining into blocks in
+one invocation, nugget-derived ingot priority, mixed inputs, remainders,
+custom metadata, final-output-only space checks, and atomic rollback.
+Redstone and lapis probes verify 9:1 block conversion and remainders,
+including legacy lapis dye data; unit tests protect other dye variants.
+Before aggregate help and nugget compression were restored, all eight
+production source files also compiled against Spigot 1.13.2,
+1.20.6, and 1.21.11 in isolated API checks and against the exact Paper
+26.3 build 135 API/libraries. The release remains the `--release 8`
+legacy-API build, not one of those alternate compilation outputs.
+
 ## Reproducing server probes
 
 Provision an official Paper JAR and the appropriate Java executable,
@@ -143,7 +186,7 @@ then create a **new** isolated work-directory path for each run:
 
 ```powershell
 .\tools\Test-Compatibility.ps1 `
-    -PluginJar .\target\TCPack-2.0.1.jar `
+    -PluginJar .\target\TCPack-2.1.0.jar `
     -ServerJar 'C:\test-tools\paper-26.3-135.jar' `
     -JavaPath 'C:\test-tools\jdk25\bin\java.exe' `
     -WorkingDirectory 'C:\test-runs\tcpack-26.3-new' `
@@ -151,9 +194,10 @@ then create a **new** isolated work-directory path for each run:
     -AcceptEula
 ```
 
+First build the separate runtime driver using
+`.\mvnw.cmd -f tools\runtime-driver\pom.xml package`.
 `-AcceptEula` is an explicit authorization flag, not a default. The
-runner builds the separate runtime driver with the repository wrapper,
-records evidence/logs under its isolated directory, waits for successful
+runner records evidence/logs under its isolated directory, waits for successful
 probes, and stops its own process. See script parameters for overrides
 and timeouts. Do not install the test driver in a real server's plugins
 directory.

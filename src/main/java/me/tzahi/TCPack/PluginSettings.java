@@ -8,17 +8,19 @@ import org.bukkit.configuration.file.YamlConfiguration;
 final class PluginSettings {
     private final boolean ptimeEnabled;
     private final boolean flightEnabled;
+    private final boolean compressEnabled;
 
-    private PluginSettings(boolean ptimeEnabled, boolean flightEnabled) {
+    private PluginSettings(boolean ptimeEnabled, boolean flightEnabled, boolean compressEnabled) {
         this.ptimeEnabled = ptimeEnabled;
         this.flightEnabled = flightEnabled;
+        this.compressEnabled = compressEnabled;
     }
 
     static PluginSettings load(File file) throws IOException, InvalidConfigurationException {
         YamlConfiguration configuration = new YamlConfiguration();
         configuration.load(file);
         return new PluginSettings(flag(configuration, "EnablePtime"),
-                flag(configuration, "EnableFlight"));
+                flag(configuration, "EnableFlight"), flag(configuration, "EnableCompress"));
     }
 
     private static boolean flag(YamlConfiguration configuration, String name)
@@ -39,5 +41,9 @@ final class PluginSettings {
 
     boolean isFlightEnabled() {
         return flightEnabled;
+    }
+
+    boolean isCompressEnabled() {
+        return compressEnabled;
     }
 }

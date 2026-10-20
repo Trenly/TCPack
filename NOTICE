@@ -37,6 +37,17 @@ Changes in the 2.0 adaptation:
 - Replace the obsolete IDE-only build with Maven and compatibility tests.
 See README.md and docs/not-modernized-commands.md for details.
 
+Changes in the 2.1.0 adaptation by Trenly:
+- Restore /compress with runtime-supported base logs/stems, bone blocks
+  (bones on older servers), ingot/raw-ore blocks, and diamond blocks.
+- Preserve legacy wood/dye variants and original-style command help.
+- Add metadata-safe, storage-only, all-or-nothing inventory conversion.
+- Restore EnableCompress and operator-default compress.* permissions.
+- Restore /tcpack aggregate help and its tcpack.list permission.
+- Compress iron/gold nuggets into ingots before block conversion, preferring
+  nugget-derived ingots and preserving atomic inventory updates.
+- Add redstone dust and lapis lazuli block compression, including legacy lapis data.
+
 Redistribution must preserve the applicable attribution, license and
 warranty notices and comply with ShareAlike. No additional restrictions
 or technological measures limiting the licensed rights are imposed.

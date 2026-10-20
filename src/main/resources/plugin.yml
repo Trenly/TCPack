@@ -4,15 +4,36 @@ main: me.tzahi.TCPack.TCPack
 api-version: '1.13'
 authors: [Tzahi, TacoID, Trenly]
 website: https://github.com/Trenly/TCPack
-description: Personal time and flight; original by tzahi12345 and TacoID, refactor by Trenly.
+description: Personal time, flight, and compression; original by tzahi12345 and TacoID, refactor by Trenly.
 commands:
+  tcpack:
+    description: List TCPack command families.
+    usage: /<command>
   ptime:
     description: Set or inspect your personal time.
     usage: /<command> [day|night|morning|dawn|dusk|reset|info]
   fly:
     description: Control flight in survival or adventure mode.
     usage: /<command> [t|toggle|on|off] [player]
+  compress:
+    description: Compress plain inventory items into logs or storage blocks.
+    usage: /<command> [wood|bonemeal|ores]
 permissions:
+  tcpack.list:
+    description: View TCPack help.
+    default: op
+  compress.list:
+    description: View compression help.
+    default: op
+  compress.wood:
+    description: Convert planks to base logs or stems.
+    default: op
+  compress.bonemeal:
+    description: Convert bonemeal to bone blocks or bones.
+    default: op
+  compress.ores:
+    description: Convert iron/gold nuggets into ingots and ingots, raw ores, diamonds, redstone, and lapis into blocks.
+    default: op
   ptime.list:
     description: View personal time help.
     default: op

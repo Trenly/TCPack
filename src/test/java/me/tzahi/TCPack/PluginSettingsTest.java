@@ -22,14 +22,16 @@ class PluginSettingsTest {
         PluginSettings settings = PluginSettings.load(config("# Existing configuration\n"));
         assertTrue(settings.isPtimeEnabled());
         assertTrue(settings.isFlightEnabled());
+        assertTrue(settings.isCompressEnabled());
     }
 
     @Test
     void readsBothBooleanFlags() throws Exception {
         PluginSettings settings = PluginSettings.load(config(
-                "EnablePtime: false\nEnableFlight: false\n"));
+                "EnablePtime: false\nEnableFlight: false\nEnableCompress: false\n"));
         assertFalse(settings.isPtimeEnabled());
         assertFalse(settings.isFlightEnabled());
+        assertFalse(settings.isCompressEnabled());
     }
 
     @Test
@@ -53,7 +55,7 @@ class PluginSettingsTest {
 
     @Test
     void invalidFlagTypesFailExplicitly() throws Exception {
-        for (String key : new String[] {"EnablePtime", "EnableFlight"}) {
+        for (String key : new String[] {"EnablePtime", "EnableFlight", "EnableCompress"}) {
             for (String value : new String[] {"'true'", "1", "[]", "{}"}) {
                 File file = config(key + ": " + value + "\n");
                 InvalidConfigurationException error = assertThrows(

@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string] $JarPath = (Join-Path (Split-Path $PSScriptRoot -Parent) 'target\TCPack-2.0.1.jar')
+    [string] $JarPath = (Join-Path (Split-Path $PSScriptRoot -Parent) 'target\TCPack-2.1.0.jar')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -27,6 +27,13 @@ try {
         'me/tzahi/TCPack/PluginSettings.class'
         'me/tzahi/TCPack/command/PtimeCommand.class'
         'me/tzahi/TCPack/command/FlyCommand.class'
+        'me/tzahi/TCPack/command/CompressCommand.class'
+        'me/tzahi/TCPack/command/TCPackCommand.class'
+        'me/tzahi/TCPack/command/CompressCommand$1.class'
+        'me/tzahi/TCPack/compress/Compressor.class'
+        'me/tzahi/TCPack/compress/Compressor$Result.class'
+        'me/tzahi/TCPack/compress/Conversion.class'
+        'me/tzahi/TCPack/compress/Recipes.class'
     )
     $classes = @($archive.Entries | Where-Object FullName -Like '*.class')
     $differences = Compare-Object ($expectedClasses | Sort-Object) `
@@ -64,8 +71,8 @@ try {
         throw 'Missing plugin.yml'
     }
     $descriptor = [Text.Encoding]::UTF8.GetString((Read-Entry $descriptorEntry))
-    if ($descriptor -notmatch "(?m)^version: ['""]?2\.0\.1['""]?\s*$") {
-        throw 'Plugin version is not 2.0.1'
+    if ($descriptor -notmatch "(?m)^version: ['""]?2\.1\.0['""]?\s*$") {
+        throw 'Plugin version is not 2.1.0'
     }
     if ($descriptor -match '\$\{') {
         throw 'Unresolved Maven resource placeholder in plugin.yml'
@@ -81,7 +88,7 @@ $hash = (Get-FileHash -LiteralPath $resolvedJar -Algorithm SHA256).Hash
 [pscustomobject]@{
     Jar = $resolvedJar
     SHA256 = $hash
-    Version = '2.0.1'
+    Version = '2.1.0'
     ClassFileMajor = 52
     LicenseAndNotice = 'Identical to repository originals'
     Telemetry = 'None'

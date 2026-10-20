@@ -2,14 +2,15 @@
 
 ## Project and scope
 
-TCPack is a legacy Bukkit plugin modernized to retain personal-time
-(`/ptime`) and flight (`/fly`) commands. Read `README.md`,
+TCPack is a legacy Bukkit plugin modernized to provide personal-time
+(`/ptime`), flight (`/fly`), compression (`/compress`), and aggregate
+help (`/tcpack`) commands. Read `README.md`,
 `docs/compatibility.md`, and `NOTICE` before changing behavior.
 
 - Preserve the plugin name, data-directory identity, and entry point
   `me.tzahi.TCPack.TCPack`.
-- Only `/ptime` and `/fly` are registered. Do not restore `/fake`,
-  `/compress`, `/tcpack`, or published-only commands without an explicit
+- Only `/ptime`, `/fly`, `/compress`, and `/tcpack` are registered. Do not restore `/fake`
+  or published-only commands without an explicit
   request. Maintain `docs/not-modernized-commands.md` when scope changes.
 - Do not add MCStats, bStats, telemetry, or runtime network tasks. The
   original reported failure came from a downloaded binary's obsolete
@@ -46,7 +47,7 @@ TCPack is a legacy Bukkit plugin modernized to retain personal-time
 - Reject invalid arguments, denied permissions, disabled features,
   unsupported senders, and offline targets with explicit feedback and
   no state changes. Validate permission before target lookup.
-- Preserve `EnablePtime` and `EnableFlight`, defaulting to true when
+- Preserve `EnablePtime`, `EnableFlight`, and `EnableCompress`, defaulting to true when
   missing. Preserve existing config files and ignore obsolete keys.
   Malformed YAML/non-boolean flags must log an explicit error and
   disable the plugin, not silently fall back to enabled behavior.
@@ -68,6 +69,13 @@ TCPack is a legacy Bukkit plugin modernized to retain personal-time
 - Protect exact help text, colors, ordering, and namespaced labels
   with regression tests.
 
+### Aggregate help
+
+- `/tcpack` lists implemented command families in the original blue/gold
+  TCPack help style. Preserve `tcpack.list` with operator-only defaults.
+- Allow player and console senders. Additional arguments display the same
+  help, as in the original; never list removed `/fake` commands.
+
 ### Flight
 
 - Retain `t`/`toggle`, `on`, and `off`, with optional exact online-player
@@ -79,6 +87,31 @@ TCPack is a legacy Bukkit plugin modernized to retain personal-time
 - Report redundant on/off requests without mutations.
 - Do not alter speed/game mode, add reconnect/game-mode persistence, or
   revoke flight owned by other plugins during lifecycle cleanup.
+
+### Compression
+
+- Preserve the original blue/gold help style and operator-default
+  `compress.list`, `compress.wood`, `compress.bonemeal`, and `compress.ores`.
+  Commands are player-only and respect namespaced invocation labels.
+- Detect available material names instead of hardcoding server versions.
+  Pre-1.13 wood and bonemeal require legacy species/dye data values.
+- Convert four matching planks to a base log (unstripped stem for nether
+  species), never stripped logs, wood, or hyphae. Exclude bamboo, which
+  has no matching base log/stem.
+- Prefer nine bonemeal to one bone block if available; otherwise use
+  three bonemeal to one bone. Match only bonemeal, not other dyes.
+- Convert nine matching ingots/raw ores to their available storage block;
+  also convert nine diamonds, redstone dust, or lapis lazuli to their blocks.
+  Legacy lapis is INK_SACK data 4; never consume other dyes.
+  Compress iron/gold nuggets to ingots
+  first (9:1), then include those in block conversion, consuming generated
+  ingots before existing ingots. Intermediate output needs no storage slots.
+  Preserve nugget remainders and atomic rollback; never consume world ore blocks.
+- Only process plain items in hotbar/main storage slots 0-35. Preserve
+  custom metadata, armor/offhand, and remainders. Plan on clones and
+  reject the whole invocation if outputs cannot fit; never drop leftovers.
+- Test actual runtime ItemStacks/inventories on both sides of material
+  flattening as well as newer wood/raw-ore capabilities.
 
 ## Build and repository layout
 

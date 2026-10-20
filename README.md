@@ -1,17 +1,17 @@
-# TCPack 2.0.1
+# TCPack 2.1.0
 
 **Original TCPack by tzahi12345 (Tzahi) and TacoID.**
 **TCPack 2.0 compatibility refactor by Trenly.**
 
-A small Bukkit plugin for personal time and flight. This adaptation keeps
-`/ptime` and `/fly`, removes the other legacy features, and contains no
+A small Bukkit plugin for personal time, flight, and item compression.
+This adaptation provides `/ptime`, `/fly`, `/compress`, and `/tcpack` help, and contains no
 MCStats, bStats, or other telemetry. It is based on the
 [original TCPack](https://github.com/Tzahi12345/TCPack); no endorsement by
 the original authors is implied.
 
 ## Compatibility and installation
 
-One `TCPack-2.0.1.jar` targets Minecraft **1.8 through 26.3**, with Paper as the
+One `TCPack-2.1.0.jar` targets Minecraft **1.8 through 26.3**, with Paper as the
 primary implementation and Bukkit/Spigot compatibility where available.
 Folia is not supported. The plugin uses Java 8 bytecode; **run each server on
 the Java version required by that server**, not necessarily Java 8.
@@ -23,7 +23,7 @@ Paper 26.3 requires Java 25.
 > performed, exact builds, and any unresolved runtime coverage.
 
 1. Stop the server normally and back up its plugin configuration.
-2. Replace the old TCPack JAR in `plugins` with `TCPack-2.0.1.jar`. Do not keep
+2. Replace the old TCPack JAR in `plugins` with `TCPack-2.1.0.jar`. Do not keep
    both versions installed.
 3. Start the server normally. Do not use plugin hot-reload tools.
 
@@ -33,11 +33,19 @@ are read; missing flags default to `true`:
 ```yaml
 EnablePtime: true
 EnableFlight: true
+EnableCompress: true
 ```
 
 Obsolete configuration keys are ignored, not removed from your existing
 file. Malformed YAML or non-boolean flags log an explicit configuration
 error and disable TCPack rather than silently enabling a feature.
+
+## TCPack help
+
+`/tcpack` lists `/fly`, `/compress`, and `/ptime` in the original blue/gold
+help style. It requires `tcpack.list` (operator-only by default), works
+for players and console, and does not execute the listed commands.
+As in the original, additional arguments still display this help.
 
 ## Personal time
 
@@ -87,9 +95,56 @@ nodes with your permissions plugin to allow other players to use them.
 There are no new wildcard permission aliases. If another plugin owns a
 short command, use `/tcpack:ptime` or `/tcpack:fly`.
 
+## Compression
+
+Compression returns in **2.1.0**, with the original blue/gold help style.
+All commands are player-only. Missing `EnableCompress` defaults to `true`;
+an existing `EnableCompress: false` remains respected.
+
+| Command | Effect | Permission |
+| --- | --- | --- |
+| `/compress` | Show compression help | `compress.list` |
+| `/compress wood` | Convert each matching 4 planks into 1 base log/stem | `compress.wood` |
+| `/compress bonemeal` | Convert 9 bonemeal into a bone block, or 3 into a bone on servers without bone blocks | `compress.bonemeal` |
+| `/compress ores` | Convert iron/gold nuggets into ingots, then matching ingots, raw ores, diamonds, redstone, or lapis lazuli into blocks | `compress.ores` |
+
+All four permissions default to operator-only, as with time and flight.
+Use `/tcpack:compress` if another plugin claims the short command.
+
+Materials are detected from the running server, not version strings:
+
+- Wood includes every available plank species with a corresponding base
+  log, including newer species such as mangrove, cherry, and pale oak.
+  Crimson/warped planks produce unstripped stems. Output is never stripped
+  logs/stems or wood/hyphae blocks. Bamboo is excluded because it has no
+  corresponding log/stem. Legacy data values preserve all six wood species.
+- Bonemeal prefers bone blocks whenever that material exists, including
+  pre-1.13 servers with legacy dye data. It falls back to bones only when
+  bone blocks are unavailable. Other dyes are untouched.
+- Ores includes iron/gold/copper/netherite ingots and raw iron/gold/copper
+  where available, plus diamonds, redstone dust, and lapis lazuli. Any runtime
+  `*_INGOT` or `RAW_*` item must have its matching storage block to qualify.
+  Every 9 iron/gold nuggets become 1 ingot where supported; every 9
+  matching ingots, raw ores, diamonds, redstone dust, or lapis lazuli become
+  1 corresponding block. Legacy lapis uses dye data 4; other dyes are untouched. Nugget-derived
+  ingots are used before existing ingots, in the same invocation:
+  8 ingots + 9 nuggets produce 1 block, while 8 ingots + 81 nuggets
+  produce 1 block and leave the 8 original ingots. Fewer than 9 nuggets
+  remain nuggets. Intermediate ingots do not need inventory space.
+  World ore blocks, coal, and emeralds are not
+  compressed by this command.
+
+Each invocation processes all eligible plain items in the main inventory
+and hotbar, combining matching stacks and preserving remainders. Armor,
+offhand, and items with custom metadata (names, lore, enchantments, or
+other stored custom properties) are untouched. Conversion never drops
+items: if the full output cannot fit, the entire invocation is rejected
+without modifying any inventory slots. Freed input slots and existing
+plain output stacks count as available space.
+
 ## Removed commands and telemetry
 
-`/compress`, `/fake`, and `/tcpack` are not registered. The
+`/fake` is not registered. The
 [not-modernized command inventory](docs/not-modernized-commands.md)
 includes every removed source command and the published-only commands.
 
@@ -113,7 +168,7 @@ On Linux/macOS:
 bash ./mvnw verify
 ```
 
-The output is `target/TCPack-2.0.1.jar`. The server API is provided by the
+The output is `target/TCPack-2.1.0.jar`. The server API is provided by the
 server, not bundled. Build/test tools require network access on first use.
 Maven is the source of truth for IDE imports; the obsolete Eclipse project,
 legacy `TCPack` source/output tree, and checked-in compiled classes have

@@ -4,3 +4,4 @@
 # Existing files are preserved; configuration changes require a restart.
 EnablePtime: true
 EnableFlight: true
+EnableCompress: true

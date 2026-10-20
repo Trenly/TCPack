@@ -13,7 +13,7 @@ and -ExpectedVanillaSha1 from Mojang's official version manifest. The original
 JAR must also match Paperclip's embedded SHA256. Only the inspected 1.8.8/1.12.2
 cache layouts are supported; neither the server JAR nor its metadata is changed.
 .EXAMPLE
-.\tools\Test-Compatibility.ps1 -PluginJar .\target\TCPack-2.0.1.jar `
+.\tools\Test-Compatibility.ps1 -PluginJar .\target\TCPack-2.1.0.jar `
   -ServerJar E:\servers\paper.jar -JavaPath E:\jdk8\bin\java.exe `
   -WorkingDirectory E:\TCPack\target\runtime-1.8.8-run1 -Port 25581 -AcceptEula
 #>
